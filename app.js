@@ -34,6 +34,9 @@ function buildGraph(edges) {
 const roadGraph = buildGraph(roads);
 const mailRoute = [
     "Дом Алисы", "Склад", "Дом Алисы", "Дом Боба",
+    "Ратуша", "Дом Дарии", "Дом Эрни",
+    "Дом Греты", "Магазин", "Дом Греты", "Ферма",
+    "Рынок", "Почта"
 ];
 
 class VillageState {
@@ -90,4 +93,11 @@ VillageState.random = function(parcelCount = 5) {
     return new VillageState("Почта", parcels);
 };
 
-runRobot(VillageState.random(), randomRobot);
+function routeRobot(state, memory) {
+    if (memory.length == 0) {
+        memory = mailRoute;
+    }
+    return {direction: memory[0], memory: memory.slice(1)};
+}
+
+runRobot(VillageState.random(), routeRobot, mailRoute);
